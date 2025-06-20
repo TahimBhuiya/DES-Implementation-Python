@@ -194,6 +194,28 @@ def decrypt(cipher: int) -> int:
     combined = (right << 32) | left  # note: final swap
     return final_permutation(combined)
 
+# --- Main Program ---
+
+if __name__ == "__main__":
+    plain_text = input("Enter the plaintext (8 characters): ")
+    key_text = input("Enter the key (8 characters): ")
+
+    if len(plain_text) != 8 or len(key_text) != 8:
+        print("Error: Inputs must be exactly 8 characters (64 bits)")
+        exit(1)
+
+    plain_bits = string_to_bits(plain_text)
+    key = string_to_bits(key_text)
+
+    generate_keys()
+
+    cipher = encrypt(plain_bits)
+    print("Cipher Text (binary):", format(cipher, '064b'))
+
+    decrypted_bits = decrypt(cipher)
+    print("Decrypted Plain Text:", bits_to_string(decrypted_bits))
+
+
 
 
 
