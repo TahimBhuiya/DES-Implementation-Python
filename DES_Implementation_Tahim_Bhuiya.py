@@ -137,6 +137,25 @@ def generate_keys():
         combined = (left << 28) | right
         sub_keys[round] = permute(combined, pc_2, 48)
 
+def expand(r: int) -> int:
+    return permute(r, e, 48)
+
+def substitute(bits: int) -> int:
+    output = 0
+    for i in range(8):
+        six_bits = (bits >> (42 - 6 * i)) & 0x3F
+        row = ((six_bits & 0x20) >> 4) | (six_bits & 1)
+        col = (six_bits >> 1) & 0xF
+        val = s_box[i][row][col]
+        output = (output << 4) | val
+    return output
+
+def permute_p(bits: int) -> int:
+    return permute(bits, p, 32)
+
+def f(r: int, k: int) -> int:
+    return permute_p(substitute(expand(r) ^ k))
+
 
 
 
