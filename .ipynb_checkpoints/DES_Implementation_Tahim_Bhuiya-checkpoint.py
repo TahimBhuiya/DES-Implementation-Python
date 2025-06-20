@@ -170,6 +170,20 @@ def final_permutation(bits: int) -> int:
     return permute(bits, ip_1, 64)
 
 
+# --- DES Operations ---
+
+def encrypt(plain: int) -> int:
+    bits = initial_permutation(plain)
+    left = (bits >> 32) & 0xFFFFFFFF
+    right = bits & 0xFFFFFFFF
+
+    for i in range(16):
+        left, right = right, left ^ f(right, sub_keys[i])
+
+    combined = (right << 32) | left  # note: final swap
+    return final_permutation(combined)
+
+
 
 
 
