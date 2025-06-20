@@ -116,3 +116,40 @@ s_box = [
         [2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11]
     ]
 ] 
+
+# --- Utility Functions ---
+
+def permute(bits: int, table: List[int], n: int) -> int:
+    return sum(((bits >> (64 - table[i])) & 1) << (n - 1 - i) for i in range(n))
+
+def left_shift28(k: int, shifts: int) -> int:
+    return ((k << shifts) | (k >> (28 - shifts))) & ((1 << 28) - 1)
+
+def generate_keys():
+    global sub_keys
+    permuted_key = permute(key, pc_1, 56)
+    left = (permuted_key >> 28) & ((1 << 28) - 1)
+    right = permuted_key & ((1 << 28) - 1)
+
+    for round in range(16):
+        left = left_shift28(left, shift_bits[round])
+        right = left_shift28(right, shift_bits[round])
+        combined = (left << 28) | right
+        sub_keys[round] = permute(combined, pc_2, 48)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
