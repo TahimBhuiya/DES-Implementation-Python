@@ -163,6 +163,12 @@ def string_to_bits(s: str) -> int:
 def bits_to_string(bits: int) -> str:
     return ''.join(chr((bits >> (8 * (7 - i))) & 0xFF) for i in range(8))
 
+def initial_permutation(bits: int) -> int:
+    return permute(bits, ip, 64)
+
+def final_permutation(bits: int) -> int:
+    return permute(bits, ip_1, 64)
+
 
 
 
