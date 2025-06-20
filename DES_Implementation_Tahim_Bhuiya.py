@@ -183,6 +183,16 @@ def encrypt(plain: int) -> int:
     combined = (right << 32) | left  # note: final swap
     return final_permutation(combined)
 
+def decrypt(cipher: int) -> int:
+    bits = initial_permutation(cipher)
+    left = (bits >> 32) & 0xFFFFFFFF
+    right = bits & 0xFFFFFFFF
+
+    for i in range(16):
+        left, right = right, left ^ f(right, sub_keys[15 - i])
+
+    combined = (right << 32) | left  # note: final swap
+    return final_permutation(combined)
 
 
 
