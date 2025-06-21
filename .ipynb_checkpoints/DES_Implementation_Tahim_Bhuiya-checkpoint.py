@@ -142,10 +142,17 @@ def permute(bits: int, table: List[int], n: int) -> int:
 
 
 
-
-
+# Performs a circular left shift on a 28-bit integer.
+# 
+# Parameters:
+# - k: 28-bit input value as an integer.
+# - shifts: Number of bits to shift left.
+# 
+# Returns:
+# - Resulting 28-bit integer after circular left shift.
 def left_shift28(k: int, shifts: int) -> int:
     return ((k << shifts) | (k >> (28 - shifts))) & ((1 << 28) - 1)
+
 
 def generate_keys():
     global sub_keys
