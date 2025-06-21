@@ -210,8 +210,16 @@ def substitute(bits: int) -> int:
     return output
 
 
+# Applies the DES round permutation (P-box) to a 32-bit input.
+#
+# Parameters:
+# - bits: 32-bit integer input (output from the S-box substitution).
+#
+# Returns:
+# - 32-bit permuted integer after applying the P-box table.
 def permute_p(bits: int) -> int:
     return permute(bits, p, 32)
+
 
 def f(r: int, k: int) -> int:
     return permute_p(substitute(expand(r) ^ k))
