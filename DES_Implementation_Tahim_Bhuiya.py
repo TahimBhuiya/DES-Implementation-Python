@@ -175,8 +175,16 @@ def generate_keys():
         sub_keys[round] = permute(combined, pc_2, 48)
 
 
+# Expands a 32-bit input to 48 bits using the DES expansion table (E).
+#
+# Parameters:
+# - r: 32-bit integer input (usually the right half of the data block).
+#
+# Returns:
+# - 48-bit expanded integer for mixing with the round subkey.
 def expand(r: int) -> int:
     return permute(r, e, 48)
+
 
 def substitute(bits: int) -> int:
     output = 0
