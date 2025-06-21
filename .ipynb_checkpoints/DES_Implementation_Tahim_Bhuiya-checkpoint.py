@@ -154,6 +154,14 @@ def left_shift28(k: int, shifts: int) -> int:
     return ((k << shifts) | (k >> (28 - shifts))) & ((1 << 28) - 1)
 
 
+# Generates 16 round subkeys for DES from the global 64-bit key.
+#
+# Uses PC-1 to permute the original key, splits into left/right 28-bit halves,
+# applies circular left shifts based on the round schedule, and uses PC-2
+# to generate the 48-bit subkey for each round.
+#
+# Modifies:
+# - sub_keys: A global list populated with 16 subkeys, one for each round.
 def generate_keys():
     global sub_keys
     permuted_key = permute(key, pc_1, 56)
@@ -165,6 +173,7 @@ def generate_keys():
         right = left_shift28(right, shift_bits[round])
         combined = (left << 28) | right
         sub_keys[round] = permute(combined, pc_2, 48)
+
 
 def expand(r: int) -> int:
     return permute(r, e, 48)
