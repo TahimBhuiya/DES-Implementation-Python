@@ -128,8 +128,21 @@ s_box = [
 
 # --- Utility Functions ---
 
+# Performs bit-level permutation based on a given lookup table.
+# 
+# Parameters:
+# - bits: Input value as an integer.
+# - table: List of target positions (1-based indexing).
+# - n: Number of output bits.
+# 
+# Returns:
+# - Permuted output as an integer.
 def permute(bits: int, table: List[int], n: int) -> int:
     return sum(((bits >> (64 - table[i])) & 1) << (n - 1 - i) for i in range(n))
+
+
+
+
 
 def left_shift28(k: int, shifts: int) -> int:
     return ((k << shifts) | (k >> (28 - shifts))) & ((1 << 28) - 1)
