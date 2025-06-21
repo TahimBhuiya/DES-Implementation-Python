@@ -221,8 +221,23 @@ def permute_p(bits: int) -> int:
     return permute(bits, p, 32)
 
 
+# The DES round function (F-function).
+#
+# Parameters:
+# - r: 32-bit right half of the data block.
+# - k: 48-bit round subkey.
+#
+# Process:
+# - Expands 32-bit input to 48 bits.
+# - XORs expanded input with the round subkey.
+# - Applies S-box substitution to get 32 bits.
+# - Applies permutation (P-box) to permute the bits.
+#
+# Returns:
+# - 32-bit output used in the Feistel round.
 def f(r: int, k: int) -> int:
     return permute_p(substitute(expand(r) ^ k))
+
 
 
 def string_to_bits(s: str) -> int:
