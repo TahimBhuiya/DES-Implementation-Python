@@ -186,6 +186,19 @@ def expand(r: int) -> int:
     return permute(r, e, 48)
 
 
+# Applies the 8 DES S-box substitutions on a 48-bit input.
+#
+# Parameters:
+# - bits: 48-bit integer input (expanded right half XORed with round key).
+#
+# Process:
+# - Splits input into eight 6-bit blocks.
+# - For each block, calculates row (from first and last bits) and column (middle 4 bits).
+# - Uses S-box lookup to get a 4-bit output.
+# - Concatenates all eight 4-bit outputs into a 32-bit result.
+#
+# Returns:
+# - 32-bit integer after S-box substitution.
 def substitute(bits: int) -> int:
     output = 0
     for i in range(8):
@@ -195,6 +208,7 @@ def substitute(bits: int) -> int:
         val = s_box[i][row][col]
         output = (output << 4) | val
     return output
+
 
 def permute_p(bits: int) -> int:
     return permute(bits, p, 32)
