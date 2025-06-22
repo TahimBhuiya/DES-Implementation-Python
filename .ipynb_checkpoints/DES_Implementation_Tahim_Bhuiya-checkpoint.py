@@ -239,9 +239,17 @@ def f(r: int, k: int) -> int:
     return permute_p(substitute(expand(r) ^ k))
 
 
-
+# Converts an 8-character ASCII string to a 64-bit integer.
+#
+# Parameters:
+# - s: Input string of exactly 8 characters.
+#
+# Returns:
+# - 64-bit integer representing the binary encoding of the string.
+#   Characters are packed left-to-right, most significant byte first.
 def string_to_bits(s: str) -> int:
     return sum(ord(c) << (8 * (7 - i)) for i, c in enumerate(s))
+
 
 def bits_to_string(bits: int) -> str:
     return ''.join(chr((bits >> (8 * (7 - i))) & 0xFF) for i in range(8))
