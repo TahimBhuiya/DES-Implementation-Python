@@ -1,7 +1,5 @@
 # Tahim Bhuiya
 # DES implementation in Python
-
-
 from typing import List
 
 # Globals for key and subkeys
@@ -139,9 +137,7 @@ s_box = [
 # - Permuted output as an integer.
 def permute(bits: int, table: List[int], n: int) -> int:
     return sum(((bits >> (64 - table[i])) & 1) << (n - 1 - i) for i in range(n))
-
-
-
+    
 # Performs a circular left shift on a 28-bit integer.
 # 
 # Parameters:
@@ -152,7 +148,6 @@ def permute(bits: int, table: List[int], n: int) -> int:
 # - Resulting 28-bit integer after circular left shift.
 def left_shift28(k: int, shifts: int) -> int:
     return ((k << shifts) | (k >> (28 - shifts))) & ((1 << 28) - 1)
-
 
 # Generates 16 round subkeys for DES from the global 64-bit key.
 #
@@ -173,7 +168,6 @@ def generate_keys():
         right = left_shift28(right, shift_bits[round])
         combined = (left << 28) | right
         sub_keys[round] = permute(combined, pc_2, 48)
-
 
 # Expands a 32-bit input to 48 bits using the DES expansion table (E).
 #
@@ -209,7 +203,6 @@ def substitute(bits: int) -> int:
         output = (output << 4) | val
     return output
 
-
 # Applies the DES round permutation (P-box) to a 32-bit input.
 #
 # Parameters:
@@ -219,7 +212,6 @@ def substitute(bits: int) -> int:
 # - 32-bit permuted integer after applying the P-box table.
 def permute_p(bits: int) -> int:
     return permute(bits, p, 32)
-
 
 # The DES round function (F-function).
 #
@@ -238,7 +230,6 @@ def permute_p(bits: int) -> int:
 def f(r: int, k: int) -> int:
     return permute_p(substitute(expand(r) ^ k))
 
-
 # Converts an 8-character ASCII string to a 64-bit integer.
 #
 # Parameters:
@@ -250,7 +241,6 @@ def f(r: int, k: int) -> int:
 def string_to_bits(s: str) -> int:
     return sum(ord(c) << (8 * (7 - i)) for i, c in enumerate(s))
 
-
 # Converts a 64-bit integer back to an 8-character ASCII string.
 #
 # Parameters:
@@ -260,7 +250,6 @@ def string_to_bits(s: str) -> int:
 # - String reconstructed from the 8 bytes, most significant byte first.
 def bits_to_string(bits: int) -> str:
     return ''.join(chr((bits >> (8 * (7 - i))) & 0xFF) for i in range(8))
-
 
 # Applies the DES initial permutation (IP) to a 64-bit input block.
 #
@@ -272,7 +261,6 @@ def bits_to_string(bits: int) -> str:
 def initial_permutation(bits: int) -> int:
     return permute(bits, ip, 64)
 
-
 # Applies the DES final permutation (IP⁻¹) to a 64-bit input block.
 #
 # Parameters:
@@ -282,9 +270,7 @@ def initial_permutation(bits: int) -> int:
 # - 64-bit permuted block after applying the final permutation table.
 def final_permutation(bits: int) -> int:
     return permute(bits, ip_1, 64)
-
-
-
+    
 # --- DES Operations ---
 
 # Encrypts a 64-bit plaintext block using the DES algorithm.
@@ -311,8 +297,7 @@ def encrypt(plain: int) -> int:
 
     combined = (right << 32) | left  # note: final swap
     return final_permutation(combined)
-
-
+    
 # Decrypts a 64-bit ciphertext block using the DES algorithm.
 #
 # Parameters:
@@ -337,8 +322,7 @@ def decrypt(cipher: int) -> int:
 
     combined = (right << 32) | left  # note: final swap
     return final_permutation(combined)
-
-
+    
 # --- Main Program ---
 
 # Main execution block for running DES encryption and decryption.
