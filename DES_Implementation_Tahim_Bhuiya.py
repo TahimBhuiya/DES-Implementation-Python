@@ -273,8 +273,16 @@ def initial_permutation(bits: int) -> int:
     return permute(bits, ip, 64)
 
 
+# Applies the DES final permutation (IP⁻¹) to a 64-bit input block.
+#
+# Parameters:
+# - bits: 64-bit integer representing the block after 16 DES rounds.
+#
+# Returns:
+# - 64-bit permuted block after applying the final permutation table.
 def final_permutation(bits: int) -> int:
     return permute(bits, ip_1, 64)
+
 
 
 # --- DES Operations ---
