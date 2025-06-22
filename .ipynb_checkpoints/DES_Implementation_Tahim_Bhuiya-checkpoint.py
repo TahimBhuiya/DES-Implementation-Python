@@ -287,6 +287,20 @@ def final_permutation(bits: int) -> int:
 
 # --- DES Operations ---
 
+# Encrypts a 64-bit plaintext block using the DES algorithm.
+#
+# Parameters:
+# - plain: 64-bit integer representing the plaintext block.
+#
+# Process:
+# - Applies the initial permutation (IP).
+# - Splits the block into left and right 32-bit halves.
+# - Performs 16 Feistel rounds using the round subkeys.
+# - Swaps the final left and right halves.
+# - Applies the final permutation (IP⁻¹) to produce ciphertext.
+#
+# Returns:
+# - 64-bit integer representing the encrypted ciphertext block.
 def encrypt(plain: int) -> int:
     bits = initial_permutation(plain)
     left = (bits >> 32) & 0xFFFFFFFF
@@ -297,6 +311,7 @@ def encrypt(plain: int) -> int:
 
     combined = (right << 32) | left  # note: final swap
     return final_permutation(combined)
+
 
 def decrypt(cipher: int) -> int:
     bits = initial_permutation(cipher)
