@@ -341,6 +341,14 @@ def decrypt(cipher: int) -> int:
 
 # --- Main Program ---
 
+# Main execution block for running DES encryption and decryption.
+#
+# - Prompts user for an 8-character plaintext and an 8-character key.
+# - Ensures both inputs are exactly 8 characters (64 bits).
+# - Converts inputs to 64-bit integer representations.
+# - Generates 16 round subkeys from the key.
+# - Encrypts the plaintext using DES and prints the binary ciphertext.
+# - Decrypts the ciphertext and prints the recovered plaintext.
 if __name__ == "__main__":
     plain_text = input("Enter the plaintext (8 characters): ")
     key_text = input("Enter the key (8 characters): ")
