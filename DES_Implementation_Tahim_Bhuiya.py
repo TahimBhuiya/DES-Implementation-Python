@@ -262,8 +262,16 @@ def bits_to_string(bits: int) -> str:
     return ''.join(chr((bits >> (8 * (7 - i))) & 0xFF) for i in range(8))
 
 
+# Applies the DES initial permutation (IP) to a 64-bit input block.
+#
+# Parameters:
+# - bits: 64-bit integer representing the plaintext block.
+#
+# Returns:
+# - 64-bit permuted block after applying the initial permutation table.
 def initial_permutation(bits: int) -> int:
     return permute(bits, ip, 64)
+
 
 def final_permutation(bits: int) -> int:
     return permute(bits, ip_1, 64)
